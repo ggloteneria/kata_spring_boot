@@ -1,36 +1,19 @@
 package ru.kata.spring_boot.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring_boot.model.User;
-import ru.kata.spring_boot.repositories.UserRepository;
 
 import java.util.List;
 
-@Service
-public class UserService {
+public interface UserService {
+    void save(User user);
 
-    @Autowired
-    UserRepository userRepository;
+    List<User> getUsers();
 
-    public void save(User user) {
-        userRepository.save(user);
-    }
+    User findById(Long id);
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
+    void update(Long id, User userToUpdate);
 
-    public User findById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
+    void deleteById(Long id);
 
-    public void update(Long id, User userToUpdate) {
-        userToUpdate.setId(id);
-        userRepository.save(userToUpdate);
-    }
-
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
-    }
 }
